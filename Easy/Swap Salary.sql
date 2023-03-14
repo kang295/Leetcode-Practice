@@ -49,7 +49,7 @@ Explanation:
 
 */
 
-Solution:
+-- Solution:
 
 UPDATE salary
 SET 
