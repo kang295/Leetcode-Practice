@@ -49,7 +49,7 @@ Explanation:
 
 */
 
--- Solution:
+-- Solution 1:
 
 UPDATE salary
 SET 
@@ -57,3 +57,8 @@ SET
         WHEN 'm' THEN 'f'
         ELSE 'm'
     END;
+
+-- Solution 2:
+UPDATE salary
+SET 
+    sex = if(sex = 'm', 'f', 'm')
