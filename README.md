@@ -1,3 +1,3 @@
-## SQL-Leetcode-Challenge
+## Leetcode Exercises
 
-This repository contains all my SQL solutions from Leetcode website in order to practice my SQL programming skills!
+This repository contains all my SQL and Python solutions from the Leetcode website in order to practice my programming skills!
