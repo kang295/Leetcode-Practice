@@ -39,7 +39,12 @@ Output:
 +----+----+----+----------+
 */
 
--- solution:
+-- solution1:
 select x, y, z, case when x + y > z and x + z > y and z + y > x then 'Yes'
 else 'No' end as 'triangle'
 from Triangle
+
+-- solution2:
+SELECT *, 
+IF(x+y>z and y+z>x and z+x>y, "Yes", "No") as triangle 
+FROM Triangle
