@@ -45,14 +45,16 @@ Output:
 */
 
 -- solution:
-select distinct P.product_id,
-ifnull(temp.new_price, 10) as price
-from Products as P
-left join (select * 
-from Products 
-where (product_id, change_date) in 
-(select product_id, max(change_date) 
-from Products 
-where change_date <= "2019-08-16" 
-group by product_id)) as temp
-on P.product_id = temp.product_id
+with cte as
+(select *,
+rank() over(partition by product_id order by change_date desc) as r
+from Products
+where change_date <= "2019-08-16")
+
+select product_id, new_price as price
+from cte
+where r = 1
+UNION
+select product_id, 10 as price
+from Products
+where product_id not in (select product_id from cte)
