@@ -44,11 +44,12 @@ Explanation: 1 is the only number that appears consecutively for at least three 
 */
 
 -- solution:
-select distinct l1.num as ConsecutiveNums
-from 
-Logs l1,
-Logs l2,
-Logs l3
-where l1.Id = l2.Id - 1
-and l2.Id = l3.Id -1
-and l1.Num = l2.Num and l2.Num = l3.Num
+with cte as
+(select *,
+lead(num,1) over() as next_1,
+lead(num,2) over() as next_2
+from Logs)
+
+select distinct num as ConsecutiveNums
+from cte
+where num = next_1 and num = next_2
