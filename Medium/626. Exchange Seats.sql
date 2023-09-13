@@ -48,13 +48,14 @@ Note that if the number of students is odd, there is no need to change the last 
 */
 
 -- solution:
-select 
-(case
-    when mod(id, 2) != 0 and counts != id then id + 1
-    when mod(id, 2) != 0 and counts = id then id
-    else id - 1
-    end) as id, student
-from seat,
-(select count(*) as counts
-from seat) as seat_counts
-order by id ASC
+WITH cte as(
+SELECT *, LEAD(id) OVER (order by id) as next,
+LAG(id) OVER(order by id) as prev
+FROM Seat)
+
+select
+(case when (id % 2 = 1) and next is not null then next
+when (id % 2 = 0) then prev
+else id end) as id, student
+from cte
+order by id
