@@ -49,10 +49,13 @@ Joziah's manager is employee 6, who left the company because there is no row for
 */
 
 -- solution:
-SELECT employee_id
+WITH cte as(
+SELECT employee_id, manager_id
 FROM Employees
-where salary < 30000 AND manager_id NOT IN (
-  SELECT employee_id
-  FROM Employees
-)
-ORDER BY employee_id ASC
+WHERE salary < 30000)
+
+select employee_id
+FROM cte
+where manager_id not in (select employee_id
+from Employees)
+order by employee_id
