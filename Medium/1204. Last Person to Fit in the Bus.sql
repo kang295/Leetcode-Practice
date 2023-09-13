@@ -58,10 +58,12 @@ Explanation: The folowing table is ordered by the turn for simplicity.
 */
 
 -- solution:
-SELECT first.person_name
-FROM (SELECT person_name, 
-SUM(weight) OVER (ORDER BY turn ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS total_weight
-FROM Queue) as first
-WHERE first.total_weight <= 1000
-ORDER BY first.total_weight DESC
-limit 1;
+with cte as(
+select *, sum(weight) over(order by turn rows between unbounded preceding and current row) as total
+From Queue)
+
+select person_name
+from cte
+where total <= 1000
+order by total DESC
+limit 1
