@@ -89,21 +89,20 @@ Output:
 Explanation: 
 Daniel and Monica have rated 3 movies ("Avengers", "Frozen 2" and "Joker") but Daniel is smaller lexicographically.
 Frozen 2 and Joker have a rating average of 3.5 in February but Frozen 2 is smaller lexicographically.
+*/
 
 -- solution:
-(select U.name as results
-from MovieRating as MR
-left join Users as U
-on MR.user_id = U.user_id
-group by MR.user_id
-order by count(MR.movie_id) DESC, U.name
-limit 1)
-UNION
-(select M.title as results
-from MovieRating as MR
-left join Movies as M
-on MR.movie_id = M.movie_id
-where MR.created_at like '2020-02%'
-group by MR.movie_id
-order by avg(MR.rating) DESC, M.title ASC
-limit 1)
+(SELECT u.name AS results
+FROM MovieRating mr INNER JOIN Users u ON mr.User_id = u.user_id
+GROUP BY mr.user_id 
+ORDER BY count(mr.movie_id) DESC, name 
+LIMIT 1)
+
+UNION ALL
+
+(SELECT m.title AS results 
+FROM MovieRating mr INNER JOIN Movies m ON mr.movie_id = m.movie_id
+WHERE mr.created_at like '2020-02-%'
+GROUP BY mr.movie_id
+ORDER BY avg(mr.rating) DESC, title 
+LIMIT 1)
