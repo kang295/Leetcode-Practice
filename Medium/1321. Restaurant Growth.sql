@@ -61,11 +61,13 @@ Explanation:
 */
 
 -- solution:
-SELECT DISTINCT visited_on,
-amount,
-ROUND(amount/7, 2) AS average_amount
-FROM(SELECT visited_on, 
-      SUM(amount) over (ORDER BY visited_on range BETWEEN INTERVAL 6 DAY preceding AND current row) AS amount,
-      dense_rank() over (ORDER BY visited_on) AS rk
-      FROM Customer) AS first
-WHERE rk >= 7
+with cte as (
+  select visited_on,
+  sum(amount) over
+  (order by visited_on range between interval 6 day preceding and current row) as amount 
+  from Customer
+  )
+
+select distinct visited_on, amount, round(amount/7, 2) as average_amount
+  from cte
+  where visited_on >= (select min(visited_on) + 6 from Customer)
