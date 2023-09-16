@@ -43,13 +43,15 @@ The person with id 3 is a friend of people 1, 2, and 4, so he has three friends 
 */
 
 -- solution:
-select c1 as id, count(*) as num
-from
-(select requester_id as c1, accepter_id as c2
-from RequestAccepted
+with cte as(
+select requester_id as id, accepter_id
+from RequestAccepted 
 UNION
-select accepter_id as c1, requester_id as c2
-from RequestAccepted) as tmp1
-group by c1
+select accepter_id as id, requester_id
+from RequestAccepted)
+
+select id, count(accepter_id) as num
+from cte
+group by id
 order by num DESC
 limit 1;
