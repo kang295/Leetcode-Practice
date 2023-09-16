@@ -55,17 +55,21 @@ So, the result is the sum of tiv_2016 of the first and last record, which is 45.
 */
 
 -- solution:
-select round(sum(tiv_2016), 2) as tiv_2016
+with cte as(
+select concat(lat, ',', lon) as location
 from Insurance
-where tiv_2015 in (
-  select tiv_2015
-  from Insurance
-  group by tiv_2015
-  having count(*) > 1
-) 
-and concat(lat, lon) in (
-  select concat(lat, lon)
-  from insurance
-  group by lat, lon
-  having count(*) = 1
-)
+group by lat, lon
+having count(pid) > 1)
+
+,cte2 as(
+select distinct I1.*
+from Insurance I1
+left join Insurance I2
+on I1.tiv_2015 = I2.tiv_2015
+where I1.pid <> I2.pid
+and concat(I1.lat, ',', I1.lon) not in (
+  select location
+  from cte))
+
+select round(sum(tiv_2016),2) as tiv_2016
+from cte2
