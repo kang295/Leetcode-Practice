@@ -42,6 +42,5 @@ Explanation: john@example.com is repeated two times. We keep the row with the sm
 
 -- solution:
 delete p1
-from Person p1, Person p2
-where p1.email = p2.email 
-and p1.id > p2.id
+FROM Person p1
+CROSS JOIN Person p2 on p1.email = p2.email and p1.id > p2.id
