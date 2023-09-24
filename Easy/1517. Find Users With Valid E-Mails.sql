@@ -57,4 +57,4 @@ The mail of user 7 starts with a period.
 -- solution:
 SELECT *
 FROM Users
-WHERE mail REGEXP '^[a-zA-Z][a-zA-Z0-9._-]*@leetcode\\.com'
+where regexp_like(mail, '^[a-zA-Z][a-zA-Z0-9._-]*@leetcode[.]com')
