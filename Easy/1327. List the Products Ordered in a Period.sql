@@ -80,10 +80,10 @@ Products with product_id = 5 is ordered in February a total of (50 + 50) = 100.
 */
 
 -- solution:
-SELECT p.product_name, SUM(o.unit) as unit
-FROM Products p
-LEFT JOIN Orders o
-ON p.product_id = o.product_id
-WHERE MONTH(o.order_date) = '02'
-GROUP BY p.product_name
-HAVING SUM(o.unit) >= 100
+select P.product_name, sum(O.unit) as unit
+from Products P
+left join Orders O
+on P.product_id = O.product_id
+where month(order_date) = 2 and year(order_date) = 2020
+group by P.product_name
+having unit >= 100
