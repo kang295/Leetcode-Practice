@@ -1,0 +1,50 @@
+/*
+Table: Teams
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| team_name   | varchar |
++-------------+---------+
+team_name is the column with unique values of this table.
+Each row of this table shows the name of a team.
+ 
+
+Write a solution to report all the possible matches of the league. Note that every two teams play two matches with each other, with one team being the home_team once and the other time being the away_team.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Teams table:
++-------------+
+| team_name   |
++-------------+
+| Leetcode FC |
+| Ahly SC     |
+| Real Madrid |
++-------------+
+Output: 
++-------------+-------------+
+| home_team   | away_team   |
++-------------+-------------+
+| Real Madrid | Leetcode FC |
+| Real Madrid | Ahly SC     |
+| Leetcode FC | Real Madrid |
+| Leetcode FC | Ahly SC     |
+| Ahly SC     | Real Madrid |
+| Ahly SC     | Leetcode FC |
++-------------+-------------+
+Explanation: All the matches of the league are shown in the table.
+*/
+
+-- solution:
+select T1.team_name as home_team, T2.team_name as away_team
+from Teams T1
+cross join Teams T2
+where T1.team_name != T2.team_name
